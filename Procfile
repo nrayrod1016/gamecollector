@@ -1,1 +1,1 @@
-web: gunicorn <gamecollector>.wsgi
+web: gunicorn gamecollector.wsgi
