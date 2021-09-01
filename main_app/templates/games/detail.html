@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+<link 
+  href="https://cdn.jsdelivr.net/npm/mc-datepicker/dist/mc-calendar.min.css" 
+  rel="stylesheet" 
+/>
+<script 
+  src="https://cdn.jsdelivr.net/npm/mc-datepicker/dist/mc-calendar.min.js"
+>
+</script>
+
+<link 
+  rel="stylesheet" 
+  type="text/css" 
+  href="{% static 'css/game-detail.css' %}"
+/>
+
+{% endblock %}
+
+{% block content %}
+
+<section class="cat-container">
+  <div class="cat-img">
+    <img 
+      src="{% static 'images/sk8r-boi-cat.svg' %}" 
+      alt="A skater boy cat"
+    >
+  </div>
+  <div class="cat-details">
+    <h1>{{ game.name }}</h1>
+    {% if game.age > 0 %}
+      <h2>A {{ game.year }} year old {{game.gameType}}</h2>
+    {% else %}
+      <h2>A {{ game.gameType }} kitten.</h2>
+    {% endif %}
+    <p>{{ game.description }}</p>
+    <div class="class-actions"> 
+      <a href="{% url 'games_update' game.id %}" class="btn warn">Edit</a> 
+      <a href="{% url 'games_delete' game.id %}" class="btn danger">Delete</a> 
+  </div>
+</section>
+
+<div class="feedings-toy-container">
+  <section class="feedings">
+
+
+    <div class="subsection-title">
+      <h2>Last Played</h2>
+      <img 
+        src="{% static 'images/cat-cone.svg' %}" 
+        alt="An ice cream cone cat"
+      />
+      <img 
+        src="{% static 'images/cat-onigiri.svg' %}"
+        alt="A cat as onigiri"
+      />
+      <img 
+        src="{% static 'images/kitty-kabob.svg' %}" 
+        alt="A kabob of kittens"
+      />
+    </div>
+    <h3>Add a Playing</h3>
+    <form
+      action="{% url 'add_playing' game.id %}"
+      method="post" 
+      class="subsection-content"
+    >
+      {% csrf_token %}
+      {{ feeding_form.as_p }}
+      <button type="submit" class="btn submit">Add Playing</button>
+    </form>
+    <h3>Past Playings</h3>
+   
+    
+
+    
+    <table>
+      <thead>
+        <tr><th>Date</th><th>Play</th></tr>
+      </thead>
+      <tbody>
+        {% for playing in game.playing_set.all %}
+          <tr>
+            <td>{{playing.get_play_display}}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </section>
+</div>
+
+{% endblock %}

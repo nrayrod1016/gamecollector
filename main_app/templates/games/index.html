@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+{% comment %} <link rel="stylesheet" type="text/css" href="{% static 'css/game-index.css' %}"/> {% endcomment %}
+{% endblock %}
+
+{% block content %}
+
+<section class="page-header">
+  <h1>Game List</h1>
+  <img src="{% static 'images/cool-cat.svg' %}" alt="A cool cat" />
+  <img src="{% static 'images/happy-cat.svg' %}" alt="A happy cat" />
+  <img src="{% static 'images/teacup-cat.svg' %}" alt="A cat in a teacup" />
+  <img src="{% static 'images/cat-in-box.svg' %}" alt="A cat in a box" />
+</section>
+
+<section class="card-container">
+
+  {% for game in games %}
+  <div class="card">
+ <a href="{% url 'games_detail' game.id %}">
+      <div class="card-content">
+        <div class="card-img-container">
+          <img 
+            src="{% static 'images/sk8r-boi-cat.svg' %}" 
+            alt="A skater boy cat"
+          >
+        </div>
+        <h2 class="card-title">{{ game.name }}</h2>
+        {% if game.year > 0 %}
+          <p>A {{ game.year }} year old {{ game.gameType}}</p>
+        {% else %}
+          <p>A {{ game.gameType }} game.</p>
+        {% endif %}
+        <p><small>{{ game.name }}</small></p>
+      </div>
+    </div>
+  {% endfor %}
+</section>
+
+{% endblock %}
