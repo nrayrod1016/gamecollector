@@ -9,6 +9,10 @@ https://docs.djangoproject.com/en/3.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
+import environ 
+env = environ.Env() 
+environ.Env.read_env() 
+
 
 from pathlib import Path
 
@@ -20,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-08!y)qt+rlmx68q4d2v08lyd5#9*bk9o222icti+3uy1u2kmsx'
+SECRET_KEY = 'abc123'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -124,3 +128,10 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+DEBUG_PROPAGATE_EXCEPTIONS = True
+
+
+
+# Configure Django App for Heroku 
+import django_heroku 
+django_heroku.settings(locals())
