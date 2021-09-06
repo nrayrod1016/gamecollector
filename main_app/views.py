@@ -42,8 +42,7 @@ class GameCreate(CreateView):
   fields = ['name', 'gameType', 'system', 'year']
   success_url = '/games/'
 
-  # def for_valid(self, form): 
-  #   form.instance.user = self.request.user 
+  
 
 
 class GameUpdate(UpdateView):
@@ -79,6 +78,6 @@ class ToyDelete(DeleteView):
   success_url = '/toys/'
 
 
-# def assoc_toy(request, game_id, toy_id):
-#   Game.objects.get(id=game_id).toys.add(toy_id)
-#   return redirect('games_detail', game_id=game_id)
+def assoc_toy(request, game_id, toy_id):
+  Game.objects.get(id=game_id).toys.add(toy_id)
+  return redirect('games_detail', game_id=game_id)

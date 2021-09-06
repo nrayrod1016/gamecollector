@@ -70,9 +70,9 @@ defer src="{% static 'js/game-detail.js' %}"></script>
       class="subsection-content"
     >
     {% if game.play_for_today %}
-        <p class="fed">{{game.title}} has been fed all their meals for today!</p>
+        <p class="fed">{{game.name}} has been played enough today!</p>
       {% else %}
-        <p class="unfed">{{game.title}} might be hungry!</p>
+        <p class="unfed">{{game.name}} might need some love!</p>
       {% endif %}
       {% csrf_token %}
       {{ playing_form.as_p }}
@@ -106,7 +106,7 @@ defer src="{% static 'js/game-detail.js' %}"></script>
       <img src="{% static 'images/mouse.svg' %}" alt="A mouse" />
       <img src="{% static 'images/fish.svg' %}" alt="A fishy toy" />
     </div>
-    <h3>{{ game.title }}'s Toys</h3>
+    <h3>{{ game.name }}'s Toys</h3>
     <div class="subsection-content">
       {% if game.toys.count %}
         {% for toy in game.toys.all %}
@@ -121,7 +121,7 @@ defer src="{% static 'js/game-detail.js' %}"></script>
           </div>
         {% endfor %}
       {% else %}
-        <p class="no-toys">{{game.title}} doesn't have any toys 😞</p>
+        <p class="no-toys">{{game.name}} doesn't have any toys 😞</p>
       {% endif %}
     </div>
     <h3>Available Toys</h3>
@@ -137,7 +137,7 @@ defer src="{% static 'js/game-detail.js' %}"></script>
             <a href="{% url 'toys_detail' toy.id %}">
               <p>A {{ toy.color }} {{ toy.name }}</p>
             </a>
-            <form action="" method="post">
+            <form action="{% url 'assoc_toy' game.id toy.id %}" method="post">
               {% csrf_token %}
               <button type="submit" class="btn submit">Give toy</button>
             </form>
@@ -145,7 +145,7 @@ defer src="{% static 'js/game-detail.js' %}"></script>
         {% endfor %}
       {% else %}
         <p class="all-toys">
-          {{game.title}} already has all the available toys 🥳
+          {{game.name}} already has all the available toys 🥳
         </p>
       {% endif %}
     </div>
