@@ -16,6 +16,8 @@
   type="text/css" 
   href="{% static 'css/game-detail.css' %}"
 />
+<script 
+defer src="{% static 'js/game-detail.js' %}"></script>
 
 {% endblock %}
 
@@ -33,7 +35,7 @@
     {% if game.age > 0 %}
       <h2>A {{ game.year }} year old {{game.gameType}}</h2>
     {% else %}
-      <h2>A {{ game.gameType }} kitten.</h2>
+      <h2>A {{ game.gameType }} game.</h2>
     {% endif %}
     <p>{{ game.description }}</p>
     <div class="class-actions"> 
@@ -68,7 +70,7 @@
       class="subsection-content"
     >
       {% csrf_token %}
-      {{ feeding_form.as_p }}
+      {{ playing_form.as_p }}
       <button type="submit" class="btn submit">Add Playing</button>
     </form>
     <h3>Past Playings</h3>
@@ -82,9 +84,10 @@
       </thead>
       <tbody>
         {% for playing in game.playing_set.all %}
-          <tr>
-            <td>{{playing.get_play_display}}</td>
-          </tr>
+         <tr>
+              <td>{{playing.date}}</td>
+              <td>{{playing.get_play_display}}</td>
+            </tr>
         {% endfor %}
       </tbody>
     </table>

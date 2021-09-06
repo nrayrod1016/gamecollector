@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models.deletion import CASCADE 
 from django.urls import reverse 
 from datetime import date
 
@@ -24,10 +25,13 @@ class Game(models.Model):
   def get_absolute_url(self):
     return reverse('games_detail', kwargs={'game_id': self.id})
 
+  def play_for_today(self): 
+    return self.playing_set.filter(date=date.today()).count() >= len(PLAY)
+
 
 class Playing(models.Model): 
   date = models.DateField('Playing Date') 
-  meal = models.CharField(
+  play = models.CharField(
     max_length=1, 
     choices=PLAY, 
     default=PLAY[0][0]

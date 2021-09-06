@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from .models import Game
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-# from .forms import PlayingForm 
+from .forms import PlayingForm 
 # Create your views here.
 
 
@@ -21,16 +21,17 @@ def games_index(request):
 
 def games_detail(request, game_id): 
   game = Game.objects.get(id=game_id)
-  return render(request, 'games/detail.html', { 'game': game} )
+  playing_form = PlayingForm() 
+  return render(request, 'games/detail.html', { 'game': game, 'playing_form': playing_form} )
  
-# def add_playing(request, play_id):
-#   form = PlayingForm(request.POST)
-#   # validate the form
-#   if form.is_valid():
-#     new_playing = form.save(commit=False)
-#     new_playing.game_id = game_id
-#     new_playing.save()
-#   return redirect('game_detail', game_id=game_id)
+def add_playing(request, game_id):
+  form = PlayingForm(request.POST)
+  # validate the form
+  if form.is_valid():
+    new_playing = form.save(commit=False)
+    new_playing.game_id = game_id
+    new_playing.save()
+  return redirect('games_detail', game_id=game_id)
 
 class GameCreate(CreateView): 
   model = Game 
