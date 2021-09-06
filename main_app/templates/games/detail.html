@@ -69,6 +69,11 @@ defer src="{% static 'js/game-detail.js' %}"></script>
       method="post" 
       class="subsection-content"
     >
+    {% if game.play_for_today %}
+        <p class="fed">{{game.title}} has been fed all their meals for today!</p>
+      {% else %}
+        <p class="unfed">{{game.title}} might be hungry!</p>
+      {% endif %}
       {% csrf_token %}
       {{ playing_form.as_p }}
       <button type="submit" class="btn submit">Add Playing</button>

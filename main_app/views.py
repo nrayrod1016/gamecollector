@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
-from .models import Game
+from .models import Game, Toy 
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.views.generic import ListView, DetailView
 from .forms import PlayingForm 
 # Create your views here.
 
@@ -48,3 +49,25 @@ class GameDelete(DeleteView):
   model = Game
   success_url = '/games/' 
 
+
+
+class ToyCreate(CreateView): 
+  model = Toy 
+  fields = '__all__'
+
+class ToyList(ListView): 
+  model = Toy 
+  
+
+class ToyDetail(DetailView): 
+  model = Toy 
+
+
+class ToyUpdate(UpdateView): 
+  model = Toy 
+  fields = ['name', 'color']
+
+
+class ToyDelete(DeleteView): 
+  model = Toy 
+  success_url = '/toys/'
