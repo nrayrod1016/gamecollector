@@ -126,6 +126,10 @@ STATIC_URL = '/static/'
 
 LOGIN_URL = 'home'
 
+LOGIN_REDIRECT_URL =  'games_index'
+
+LOGOUT_REDIRECT_URL = 'home'
+
 
 
 # Default primary key field type

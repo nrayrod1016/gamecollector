@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User 
 from django.db.models.deletion import CASCADE 
 from django.urls import reverse 
 from datetime import date
@@ -28,6 +29,8 @@ class Game(models.Model):
   system = models.CharField(max_length=100)
   year = models.IntegerField()
   toys = models.ManyToManyField(Toy)
+  user = models.ForeignKey(User, on_delete=models.CASCADE)
+  
 
 
   def __str__(self): 
