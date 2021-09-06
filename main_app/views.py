@@ -22,8 +22,11 @@ def games_index(request):
 
 def games_detail(request, game_id): 
   game = Game.objects.get(id=game_id)
+  toys_game_doesnt_have = Toy.objects.exclude(id__in = game.toys.all().values_list('id'))
   playing_form = PlayingForm() 
-  return render(request, 'games/detail.html', { 'game': game, 'playing_form': playing_form} )
+  return render(request, 'games/detail.html', { 'game': game, 
+  'playing_form': playing_form, 
+  'toys': toys_game_doesnt_have} )
  
 def add_playing(request, game_id):
   form = PlayingForm(request.POST)
@@ -36,8 +39,11 @@ def add_playing(request, game_id):
 
 class GameCreate(CreateView): 
   model = Game 
-  fields = "['title', 'gameType', 'system', 'age']"
+  fields = ['name', 'gameType', 'system', 'year']
   success_url = '/games/'
+
+  # def for_valid(self, form): 
+  #   form.instance.user = self.request.user 
 
 
 class GameUpdate(UpdateView):
@@ -71,3 +77,8 @@ class ToyUpdate(UpdateView):
 class ToyDelete(DeleteView): 
   model = Toy 
   success_url = '/toys/'
+
+
+# def assoc_toy(request, game_id, toy_id):
+#   Game.objects.get(id=game_id).toys.add(toy_id)
+#   return redirect('games_detail', game_id=game_id)
