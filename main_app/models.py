@@ -11,12 +11,23 @@ PLAY = (
 )
 
 # Create your models here.
+
+class Toy(models.Model):
+  name = models.CharField(max_length=50)
+  color = models.CharField(max_length=20)
+
+  def __str__(self):
+    return self.name
+
+  def get_absolute_url(self):
+    return reverse('toys_detail', kwargs={'pk': self.id})
+
 class Game(models.Model): 
   name = models.CharField(max_length=100)
   gameType = models.CharField(max_length=100)
   system = models.CharField(max_length=100)
   year = models.IntegerField()
-
+  toys = models.ManyToManyField(Toy)
 
 
   def __str__(self): 
@@ -45,13 +56,3 @@ class Playing(models.Model):
     ordering = ['-date']
 
 
-
-class Toy(models.Model):
-  name = models.CharField(max_length=50)
-  color = models.CharField(max_length=20)
-
-  def __str__(self):
-    return self.name
-
-  def get_absolute_url(self):
-    return reverse('toys_detail', kwargs={'pk': self.id})

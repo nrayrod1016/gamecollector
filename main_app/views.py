@@ -36,7 +36,7 @@ def add_playing(request, game_id):
 
 class GameCreate(CreateView): 
   model = Game 
-  fields = '__all__'
+  fields = "['title', 'gameType', 'system', 'age']"
   success_url = '/games/'
 
 
